@@ -29,6 +29,8 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 	Report report;
 	Incident incident;
 	Case cases;
+	Victim victim;
+	Suspect suspect;
 	Complainant complainant;
 	
 	public void addComplainant(Complainant complainant){
@@ -39,8 +41,7 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 			ps.setString(2, complainant.getComplainantName());
 			ps.setLong(3, complainant.getContactInformation());
 			ps.setString(4, complainant.getRelationShipWithVictim());
-			int noofrows = ps.executeUpdate();
-			System.out.println(noofrows + " row inserted Successfully !!!");
+			ps.executeUpdate();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -162,8 +163,8 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 	        // Inserting the case record into the database
 			ps = con.prepareStatement("insert into cases values(?,?,?,?)");
 			ps.setInt(1, cases.getCaseId());
-			ps.setInt(2, cases.getIncidentId());
-			ps.setInt(3, cases.getVictimId());
+			ps.setInt(2, cases.getVictimId());
+			ps.setInt(3, cases.getIncidentId());
 			ps.setString(4, cases.getCaseDate());
 			int noofrows = ps.executeUpdate();
 			System.out.println(noofrows + " row inserted Successfully !!!");
@@ -229,7 +230,7 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 				String status=rs.getString ("status");
 				int victimId=rs.getInt("victimId");
 				int suspectId=rs.getInt("suspectId");
-                incident = new Incident(incidentId, incidentType, incidentDate, location, description, status, victimId, suspectId);
+                incident = new Incident(incidentType, incidentDate, location, description, status, victimId, suspectId);
                 IncidentList.add(incident);
 			}
 			
@@ -258,7 +259,7 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 				String status=rs.getString ("status");
 				int victimId=rs.getInt("victimId");
 				int suspectId=rs.getInt("suspectId");
-                incident = new Incident(incidentId, incidentType, incidentDate, location, description, status, victimId, suspectId);
+                incident = new Incident(incidentType, incidentDate, location, description, status, victimId, suspectId);
                 IncidentList.add(incident);
 			}
 			
@@ -306,9 +307,9 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 			while (rs.next()) {
 				caseId = rs.getInt("caseId");
 				int incidentId = rs.getInt("incidentId");
-				int victimId = rs.getInt("complainantId");
+				int victimId = rs.getInt("victimId");
 				String caseDate =rs.getString("caseDate");
-				cases = new Case(caseId, incidentId, victimId, caseDate);
+				cases = new Case(incidentId, victimId, caseDate);
                 caseList.add(cases);
 			}
 			
@@ -350,7 +351,7 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 				int incidentId = rs.getInt("incidentId");
 				int victimId = rs.getInt("victimId");
 				String caseDate =rs.getString("caseDate");
-				cases = new Case(caseId, incidentId, victimId, caseDate);
+				cases = new Case(incidentId, victimId, caseDate);
                 caseList.add(cases);
 			}
 			
@@ -379,20 +380,6 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 		}
 	}
 	
-	// Method to remove suspect details by suspect ID
-	public void removeSuspectByCaseId(int suspectId) {
-		try {
-			con = DBConnUtil.getConnection();
-			ps = con.prepareStatement("delete from suspect where suspectId=?");
-			ps.setInt(1, suspectId);
-			int noofrows = ps.executeUpdate();
-			System.out.println(noofrows + " row deleted Successfully !!!");
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-	}
-	
 	// Method to update evidence details by evidence ID
 	public void updateEvidenceByCaseId(String location, int evidenceId)throws IncidentNumberNotFoundException {
 		try {
@@ -410,5 +397,110 @@ public class CrimeAnalysisServiceImpl implements ICrimeAnalysisService{
 			e.printStackTrace();
 		}
 	}
+	
+	public void getComplainantIdInDb(Long contactInformation) {
+		
+		try {
+			con = DBConnUtil.getConnection();
+			ps=con.prepareStatement("select complainantId from complainant where contactInformation=?");
+			ps.setLong(1, contactInformation);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				//complainant.setComplainantId(rs.getInt(1));
+				System.out.println("__________________");
+				System.out.println("Your complainantId is " + rs.getInt(1));
+				System.out.println("___________________");
 
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	public void getVictimIdInDb(Long contactInformation) {
+		
+		try {
+			con = DBConnUtil.getConnection();
+			ps=con.prepareStatement("select victimId from victim where contactInformation=?");
+			ps.setLong(1, contactInformation);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				//victim.setVictimID(rs.getInt(1));
+				System.out.println("__________________");
+				System.out.println("Your  victimId is " + rs.getInt(1));
+				System.out.println("___________________");
+
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	public void getSuspectIdInDb(Long contactInformation) {
+		
+		try {
+			con = DBConnUtil.getConnection();
+			ps=con.prepareStatement("select suspectId from suspect where contactInformation=?");
+			ps.setLong(1, contactInformation);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				//suspect.setSuspectID(rs.getInt(1));
+				System.out.println("__________________");
+				System.out.println("Your  suspectId is " + rs.getInt(1));
+				System.out.println("___________________");
+
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	public void getIncidentIdInDb(int victimId) {
+		
+		try {
+			con = DBConnUtil.getConnection();
+			ps=con.prepareStatement("select incidentId from incident where victimid=?");
+			ps.setLong(1, victimId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				//incident.setIncidentId(rs.getInt(1));
+				System.out.println("__________________");
+				System.out.println("Your incidentId is " + rs.getInt(1));
+				System.out.println("___________________");
+
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	public void getCaseIdInDb(int incidentId) {
+		
+		try {
+			con = DBConnUtil.getConnection();
+			ps=con.prepareStatement("select caseid from cases where incidentid=?");
+			ps.setLong(1, incidentId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				//cases.setCaseId(rs.getInt(1));
+				System.out.println("__________________");
+				System.out.println("Your caseId is " + rs.getInt(1));
+				System.out.println("___________________");
+
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
 }

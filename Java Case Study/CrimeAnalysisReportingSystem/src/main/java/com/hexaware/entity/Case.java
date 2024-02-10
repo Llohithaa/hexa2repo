@@ -17,18 +17,11 @@ public class Case {
 	}
 
 	//Parameterized Constructor
-	public Case(int caseId, int incidentId, int victimId, String caseDate) {
+	public Case(int victimId, int incidentId, String caseDate) {
 		super();
-		this.caseId = caseId;
+		//this.caseId = caseId;
 		this.incidentId = incidentId;
 		this.victimId = victimId;
-		this.caseDate = caseDate;
-	}
-	
-	public Case(int caseId, int incidentId, String caseDate) {
-		super();
-		this.caseId = caseId;
-		this.incidentId = incidentId;
 		this.caseDate = caseDate;
 	}
 

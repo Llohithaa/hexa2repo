@@ -20,9 +20,9 @@ public class Suspect {
 	}
 	
 	//Parameterized constructor
-	public Suspect(int suspectId, String firstName, String lastName, String dateOfBirth, String gender, String address, long contactInformation){
+	public Suspect(String firstName, String lastName, String dateOfBirth, String gender, String address, long contactInformation){
 		super();
-		this.suspectId=suspectId;
+		//this.suspectId=suspectId;
 		this.firstName=firstName;
 		this.lastName=lastName;
 		this.dateOfBirth=dateOfBirth;

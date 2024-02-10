@@ -26,18 +26,19 @@ public class MainModule {
         int userInput = sc.nextInt();
         switch (userInput) {
         case 1:{ //User functionalities
+        	System.out.println("\t\t-----Welcome User! You have access to regular user features-----");
         	System.out.println("1.Register Complaint\n2.Get Complaint Status");
         	int options=sc.nextInt();
         	switch(options) {
         	case 1:usercontroller.createCase();
         	break;
         	case 2:usercontroller.complaintStatus();
-        	case 3:usercontroller.addcases();
         	}
         	break;
         }
    
         case 2:{ // Admin functionalities
+        	System.out.println("\t\t-----Welcome Admin! You have access to administrative features-----");
         	System.out.println("1.Incident Records\n2.Case Records\n3.Other Records");
         	int options=sc.nextInt();
         	switch(options) {
@@ -70,14 +71,12 @@ public class MainModule {
             	break;
         	}
         	case 3:{
-        		System.out.println("1.Updated Suspect Details\n2.Remove Suspect Details\n3.Update Evidence");
+        		System.out.println("1.Updated Suspect Details\n3.Update Evidence");
         		int choice=sc.nextInt();
         		switch(choice) {
         		case 1:admincontroller.updateSuspectDetails();
         		break;
-        		case 2:admincontroller.removeSuspectDetails();
-        		break;
-        		case 3:admincontroller.updateEvidence();
+        		case 2:admincontroller.updateEvidence();
         		}
         		break;
         	}

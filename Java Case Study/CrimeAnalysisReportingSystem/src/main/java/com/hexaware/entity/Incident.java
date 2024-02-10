@@ -21,9 +21,9 @@ public class Incident {
 	}
 	
 	//Parameterized constructor
-	public Incident(int incidentId, String incidentType, String incidentDate, String location, String description, String status, int victimId, int suspectId){
+	public Incident(String incidentType, String incidentDate, String location, String description, String status, int victimId, int suspectId){
 		super();
-		this.incidentId=incidentId;
+		//this.incidentId=incidentId;
 		this.incidentType=incidentType;
 		this.incidentDate=incidentDate;
 		this.location=location;

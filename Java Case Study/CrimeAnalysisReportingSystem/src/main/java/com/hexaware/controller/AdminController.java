@@ -25,8 +25,9 @@ public class AdminController {
 	public void updateIncidentStatus() {
 		System.out.println("Enter IncidentId:");
 		int incidentId=sc.nextInt();
+		sc.nextLine();
 		System.out.println("Enter Status:");
-		String status=sc.next();
+		String status=sc.nextLine();
 		try {
 		implementation.updateIncidentStatus(status, incidentId);	
 		}catch (IncidentNumberNotFoundException e) {
@@ -62,7 +63,7 @@ public class AdminController {
 		System.out.println("Enter reportId:");
 		int reportId=sc.nextInt();
 		List<Report> reports = implementation.generateIncidentReport(reportId);
-        System.out.println("Order Details: ");
+        System.out.println("Report Details: ");
         for (Report report : reports) {
             System.out.println(report);
         }
@@ -73,7 +74,7 @@ public class AdminController {
 		System.out.println("Enter caseId:");
 		int caseId=sc.nextInt();
 		List<Case> cases1 = implementation.getCaseByCaseId(caseId);
-        System.out.println("Order Details: ");
+        System.out.println("Incident Report Details: ");
         for (Case cases : cases1) {
             System.out.println(cases);
         }
@@ -114,12 +115,6 @@ public class AdminController {
 	    }
 	}
 	
-	// Removes details of a suspect by their ID.
-	public void removeSuspectDetails() {
-		System.out.println("Enter suspectId:");
-		int suspectId=sc.nextInt();
-		implementation.removeSuspectByCaseId(suspectId);
-	}
 	
 	// Updates evidence details by their ID.
 	public void updateEvidence() {

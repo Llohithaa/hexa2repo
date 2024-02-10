@@ -17,9 +17,9 @@ public class Complainant {
 	}
 
 	//Parameterized constructor
-	public Complainant(int complainantId, String complainantName, Long contactInformation, String relationShipWithVictim) {
+	public Complainant(String complainantName, Long contactInformation, String relationShipWithVictim) {
 		super();
-		this.complainantId = complainantId;
+		//this.complainantId = complainantId;
 		this.complainantName = complainantName;
 		this.contactInformation = contactInformation;
 		this.relationShipWithVictim = relationShipWithVictim;
